@@ -128,5 +128,4 @@ WORKDIR /home/steam/Steam
 
 RUN curl -sqL "https://steamcdn-a.akamaihd.net/client/installer/steamcmd_linux.tar.gz" | tar zxvf -
 
-ENTRYPOINT FEXBash
-CMD ["/runicarus.sh"]
+ENTRYPOINT FEXBash /runicarus.sh
