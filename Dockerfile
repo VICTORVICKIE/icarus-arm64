@@ -77,6 +77,12 @@ RUN mkdir -p /root/icarus/drive_c/icarus \
 COPY runicarus.sh /
 RUN chmod +x /runicarus.sh
 
+# Create Steam user
+RUN groupadd -g "${STEAM_GROUPID}" steam \
+  && useradd --create-home --no-log-init -u "${STEAM_USERID}" -g "${STEAM_GROUPID}" steam
+RUN chown -R "${STEAM_USERID}":"${STEAM_GROUPID}" /home/steam
+RUN chown -R "${STEAM_USERID}":"${STEAM_GROUPID}" /game/icarus
+
 RUN useradd -m -s /bin/bash fex && \
     usermod -aG sudo fex && \
     echo "fex ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers.d/fex
@@ -97,11 +103,6 @@ WORKDIR /home/fex/FEX/Build
 RUN sudo ninja install && \
     sudo update-binfmts --enable
 
-# Create Steam user
-RUN groupadd -g "${STEAM_GROUPID}" steam \
-  && useradd --create-home --no-log-init -u "${STEAM_USERID}" -g "${STEAM_GROUPID}" steam
-RUN chown -R "${STEAM_USERID}":"${STEAM_GROUPID}" /home/steam
-RUN chown -R "${STEAM_USERID}":"${STEAM_GROUPID}" /game/icarus
 
 USER root
 
