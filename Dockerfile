@@ -110,6 +110,10 @@ RUN echo 'root:steamcmd' | chpasswd
 
 USER steam
 
+RUN mkdir -p /home/steam/.fex-emu/RootFS/
+RUN chown -R "${STEAM_USERID}":"${STEAM_GROUPID}" /home/steam/.fex-emu
+RUN chmod -R 755 /home/steam/.fex-emu
+
 WORKDIR /home/steam/.fex-emu/RootFS/
 
 RUN wget -O Ubuntu_22_04.tar.gz https://www.dropbox.com/scl/fi/16mhn3jrwvzapdw50gt20/Ubuntu_22_04.tar.gz?rlkey=4m256iahwtcijkpzcv8abn7nf && \
